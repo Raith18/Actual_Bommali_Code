@@ -29,18 +29,49 @@ A professional, enterprise-grade control system for custom 6 DOF robotic arms wi
 - **Performance Analytics** - Response time and throughput monitoring
 
 ## 🛠️ **Hardware Requirements**
-
-### Arduino Mega
-- **PWM Servos**: Base and shoulder joints (Pins 2-13)
+ 
+### STM32 Nucleo G474RE
+- **PWM Servos**: Base and shoulder joints (Timer PWM outputs)
 - **Waveshare Bus Servos**: Remaining joints (Joints 3-6) via UART
-- **Serial Communication**: 9600 baud USB connection
+- **Serial Communication**: USB CDC ACM (115200 baud default)
+- **High-Performance**: ARM Cortex-M4 @ 170MHz with FPU
+- **Memory**: 128KB SRAM, 512KB Flash
 - **Additional Peripherals**: Speakers, webcam, microphone (optional)
 
 ### Computer Requirements
 - **Python**: 3.8 or higher
 - **RAM**: 4GB minimum, 8GB recommended
-- **USB Ports**: Available for Arduino Mega connection
+- **USB Ports**: Available for STM32 Nucleo connection
 - **Display**: 1024x768 minimum resolution
+- **STM32 Tools**: STM32CubeIDE or PlatformIO for firmware development
+
+## 🎛️ **STM32 Nucleo G474RE Features**
+
+### **High-Performance Capabilities**
+- **ARM Cortex-M4** @ 170MHz with FPU and DSP instructions
+- **512KB Flash** memory for complex applications
+- **128KB SRAM** for data processing and buffering
+- **Hardware Timer** support for precise PWM servo control
+- **DMA** for efficient UART communication with bus servos
+
+### **Advanced Servo Control**
+- **7 PWM Channels** - 2 for PWM servos, 5 for extended control
+- **High-Resolution PWM** - 16-bit timer resolution for smooth servo movement
+- **Real-Time Operating** - Sub-millisecond response times
+- **Trajectory Planning** - Advanced motion profiles with quintic easing
+- **CPG Support** - Central Pattern Generator for natural movements
+
+### **Communication Protocols**
+- **USB CDC ACM** - Virtual COM port for PC communication
+- **UART (1Mbps)** - High-speed communication with Waveshare bus servos
+- **Command Protocol** - Efficient binary command structure
+- **Real-Time Feedback** - 50Hz position feedback updates
+
+### **Development Tools**
+- **STM32CubeIDE** - Official STMicroelectronics IDE (Free)
+- **PlatformIO** - Cross-platform development environment
+- **HAL Libraries** - Hardware Abstraction Layer for easy development
+- **ST-Link Debugger** - Built-in debugging and programming
 
 ## 🚀 **Quick Start**
 
@@ -51,12 +82,13 @@ A professional, enterprise-grade control system for custom 6 DOF robotic arms wi
 python install.py
 ```
 
-### 2. **Arduino Setup**
+### 2. **STM32 Setup**
 ```bash
-# 1. Open Arduino_mega.ino in Arduino IDE
-# 2. Connect your Arduino Mega board
-# 3. Upload the sketch to the board
-# 4. Note the serial port (COMx or /dev/tty*)
+# 1. Open STM32CubeIDE or PlatformIO
+# 2. Import the STM32 project files
+# 3. Connect your STM32 Nucleo G474RE board
+# 4. Build and upload the firmware
+# 5. Note the serial port (COMx or /dev/ttyACM*)
 ```
 
 ### 3. **Launch Application**
@@ -73,7 +105,7 @@ python gui.py
 ```
 
 ## 📁 **Project Structure**
-
+ 
 ```
 robotic-arm-control/
 ├── 🚀 launch.py           # Main launcher (RECOMMENDED)
@@ -81,7 +113,12 @@ robotic-arm-control/
 ├── ⚙️ gui.py              # Main GUI application
 ├── 🔧 backend.py          # Professional backend system
 ├── 📋 requirements.txt    # Python dependencies
-├── 🤖 Arduino_mega.ino    # Arduino sketch
+├── 🤖 stm32_nucleo/       # STM32 firmware directory
+│   ├── 🔧 Core/          # STM32CubeIDE project files
+│   ├── 📝 main.c         # Main application code
+│   ├── 🎛️ servo.c        # Servo control implementation
+│   ├── 📡 communication.c # Serial communication protocol
+│   └── ⚙️ stm32g4xx_hal.c # Hardware abstraction layer
 ├── 📖 README.md           # This file
 ├── 📜 start.sh           # Linux/Mac startup script
 └── 📜 start.bat          # Windows startup script
@@ -90,10 +127,10 @@ robotic-arm-control/
 ## 🎯 **Usage Guide**
 
 ### **Connection Tab**
-1. **Select Serial Port** - Choose your Arduino Mega's COM port
-2. **Set Baud Rate** - Use 9600 (default)
+1. **Select Serial Port** - Choose your STM32 Nucleo G474RE's COM port (usually /dev/ttyACM*)
+2. **Set Baud Rate** - Use 115200 (default)
 3. **Click Connect** - Establish hardware communication
-4. **Test Connection** - Verify Arduino responsiveness
+4. **Test Connection** - Verify STM32 responsiveness
 
 ### **Digital I/O Tab**
 - **Pins 2-13** - Control PWM servos and digital outputs
@@ -123,17 +160,20 @@ robotic-arm-control/
 - **Visual Themes** - Interface appearance customization
 
 ## 🔧 **Configuration**
-
-### **Arduino Pin Mapping**
+ 
+### **STM32 Pin Mapping**
 ```cpp
 // PWM Servos (Base & Shoulder)
-Pins 2-13: PWM servo control
+TIM2_CH1: PA0 - Base servo PWM
+TIM2_CH2: PA1 - Shoulder servo PWM
 
-// Analog Inputs
-A0-A5: Sensor monitoring
+// UART Communication (Bus Servos)
+USART1_TX: PA9  - Serial data to bus servos
+USART1_RX: PA10 - Serial data from bus servos
 
-// Serial Communication
-Baud Rate: 9600
+// Serial Communication (USB CDC)
+USB_OTG_FS - Virtual COM port
+Baud Rate: 115200
 Protocol: Command-response based
 ```
 
@@ -179,19 +219,19 @@ GET_STATUS
 ## 🛠️ **Troubleshooting**
 
 ### **Connection Issues**
-1. **Check USB Connection** - Ensure Arduino is properly connected
-2. **Verify Serial Port** - Use Arduino IDE to confirm port
-3. **Check Baud Rate** - Ensure 9600 baud is set
+1. **Check USB Connection** - Ensure STM32 Nucleo is properly connected
+2. **Verify Serial Port** - Use STM32CubeIDE or device manager to confirm port
+3. **Check Baud Rate** - Ensure 115200 baud is set
 4. **Restart Application** - Close and reopen if needed
 
 ### **Performance Issues**
 1. **Enable Butter Smooth Mode** - For 60 FPS animations
 2. **Adjust Refresh Interval** - In Settings tab
 3. **Check System Resources** - Monitor CPU and memory usage
-4. **Update Drivers** - Ensure Arduino drivers are current
+4. **Update Drivers** - Ensure STM32 drivers and ST-Link are current
 
 ### **Servo Control Problems**
-1. **Verify Pin Configuration** - Check Arduino pin setup
+1. **Verify Pin Configuration** - Check STM32 timer and GPIO setup
 2. **Test Individual Pins** - Use Digital I/O tab
 3. **Check Power Supply** - Ensure adequate servo power
 4. **Monitor Temperature** - Prevent servo overheating
@@ -235,10 +275,10 @@ pip install -r requirements.txt --upgrade
 python launch.py --check-updates
 ```
 
-### **Arduino Updates**
-1. **Open Arduino_mega.ino** in Arduino IDE
-2. **Make necessary changes** to the sketch
-3. **Upload to board** via USB
+### **STM32 Firmware Updates**
+1. **Open STM32CubeIDE** or PlatformIO
+2. **Make necessary changes** to the source files
+3. **Build and upload** firmware via ST-Link
 4. **Restart application** to use new firmware
 
 ## 📝 **Development Notes**
@@ -247,7 +287,10 @@ python launch.py --check-updates
 - **gui.py** - Main GUI application with smooth animations
 - **backend.py** - Professional hardware abstraction layer
 - **launch.py** - System launcher and initialization
-- **Arduino_mega.ino** - Arduino firmware for hardware control
+- **stm32_nucleo/** - STM32 firmware directory
+  - **main.c** - Main application and control logic
+  - **servo.c** - Servo control implementation
+  - **communication.c** - Serial communication protocol
 
 ### **Design Patterns**
 - **MVC Architecture** - Model-View-Controller separation
@@ -265,9 +308,9 @@ python launch.py --check-updates
 
 ### **Common Issues**
 - **Import Errors** - Run `python install.py` to fix dependencies
-- **Connection Failures** - Check USB cable and Arduino drivers
+- **Connection Failures** - Check USB cable and STM32 drivers
 - **Performance Issues** - Enable Butter Smooth mode in settings
-- **Servo Problems** - Verify power supply and pin configurations
+- **Servo Problems** - Verify power supply and STM32 timer configurations
 
 ## 📄 **License**
 

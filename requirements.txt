@@ -1,12 +1,17 @@
-# Robotic Arm Control System Requirements
+# STM32 Nucleo G474RE Robotic Arm Control System Requirements
 # Install with: pip install -r requirements.txt
 
 # Core dependencies
 tkinter>=8.6
-pyserial>=3.5
+pyserial>=3.5          # Updated for STM32 communication (115200 baud)
 pyautogui>=0.9.54
 pillow>=8.0.0
 requests>=2.25.0
+
+# STM32 Development Tools (Optional - for firmware development)
+# STM32CubeIDE - Download from STMicroelectronics website (Free)
+# PlatformIO - Alternative development environment
+# st-link-tools - For STM32 programming and debugging
 
 # Development dependencies
 colorama>=0.4.4
@@ -26,3 +31,8 @@ marshmallow>=3.0.0
 # Async support (for future enhancements)
 asyncio>=3.4.3
 aiofiles>=0.7.0
+
+# STM32-specific communication settings:
+# - Baud rate: 115200 (increased from 9600 for better performance)
+# - Serial port: Usually /dev/ttyACM* for STM32 Nucleo boards
+# - USB CDC ACM protocol for virtual COM port
