@@ -1,0 +1,28 @@
+# Robotic Arm Control System Requirements
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+tkinter>=8.6
+pyserial>=3.5
+pyautogui>=0.9.54
+pillow>=8.0.0
+requests>=2.25.0
+
+# Development dependencies
+colorama>=0.4.4
+
+# Optional: For enhanced features
+opencv-python>=4.5.0  # For webcam support
+pyaudio>=0.2.11       # For microphone support
+pygame>=2.0.0         # For audio features
+
+# Type hints (usually included with Python 3.8+)
+typing-extensions>=3.10.0
+
+# Data validation and serialization
+pydantic>=1.8.0
+marshmallow>=3.0.0
+
+# Async support (for future enhancements)
+asyncio>=3.4.3
+aiofiles>=0.7.0

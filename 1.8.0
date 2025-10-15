@@ -1,0 +1,19 @@
+Collecting pydantic
+  Downloading pydantic-2.12.0-py3-none-any.whl.metadata (83 kB)
+Collecting annotated-types>=0.6.0 (from pydantic)
+  Using cached annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.41.1 (from pydantic)
+  Downloading pydantic_core-2.41.1-cp313-cp313-win_amd64.whl.metadata (7.4 kB)
+Collecting typing-extensions>=4.14.1 (from pydantic)
+  Using cached typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting typing-inspection>=0.4.2 (from pydantic)
+  Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+Downloading pydantic-2.12.0-py3-none-any.whl (459 kB)
+Downloading pydantic_core-2.41.1-cp313-cp313-win_amd64.whl (2.0 MB)
+   ---------------------------------------- 2.0/2.0 MB 6.2 MB/s  0:00:00
+Using cached annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Using cached typing_extensions-4.15.0-py3-none-any.whl (44 kB)
+Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Installing collected packages: typing-extensions, annotated-types, typing-inspection, pydantic-core, pydantic
+
+Successfully installed annotated-types-0.7.0 pydantic-2.12.0 pydantic-core-2.41.1 typing-extensions-4.15.0 typing-inspection-0.4.2
