@@ -343,7 +343,7 @@ SOFTWARE.
 
 For questions, issues, or collaboration opportunities:
 - **GitHub Issues:** [Report a bug or request a feature](https://github.com/Raith18/Actual_Bommali_Code/issues)
-- **Email:** Available upon request
+- **Email:** mohammadraith022@gmail.com
 - **Documentation:** See `/docs` folder for detailed technical references
 
 ---
