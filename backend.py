@@ -1,5 +1,6 @@
 """
-Professional Backend System for Arduino Hardware Control
+Professional Backend System for STM32 Nucleo G474RE Hardware Control
+High-performance ARM Cortex-M4 microcontroller with advanced servo control
 Provides proper hardware abstraction, service layers, and event-driven architecture
 """
 
@@ -195,7 +196,7 @@ class HardwareInterface(ABC):
     """Abstract hardware interface"""
 
     @abstractmethod
-    def connect(self, port: str, baudrate: int = 9600) -> bool:
+    def connect(self, port: str, baudrate: int = 115200) -> bool:
         """Connect to hardware"""
         pass
 
@@ -215,16 +216,16 @@ class HardwareInterface(ABC):
         pass
 
 
-class ArduinoHardwareInterface(HardwareInterface):
-    """Arduino-specific hardware interface implementation"""
+class STM32HardwareInterface(HardwareInterface):
+    """STM32 Nucleo G474RE hardware interface implementation"""
 
     def __init__(self, monitor: HardwareMonitor):
         self.serial_port: Optional[serial.Serial] = None
         self.monitor = monitor
         self.command_lock = threading.Lock()
 
-    def connect(self, port: str, baudrate: int = 9600) -> bool:
-        """Connect to Arduino with proper initialization"""
+    def connect(self, port: str, baudrate: int = 115200) -> bool:
+        """Connect to STM32 Nucleo with proper initialization"""
         try:
             self.serial_port = serial.Serial(port, baudrate, timeout=1)
             time.sleep(2)  # Allow Arduino to initialize
@@ -605,7 +606,7 @@ class BackendManager:
         # Initialize core systems
         self.monitor = HardwareMonitor()
         self.events = EventManager()
-        self.hardware_interface = ArduinoHardwareInterface(self.monitor)
+        self.hardware_interface = STM32HardwareInterface(self.monitor)
         self.hardware_service = HardwareService(self.hardware_interface, self.events)
         self.automation_engine = AutomationEngine(self.hardware_service, self.events)
 
@@ -628,7 +629,7 @@ class BackendManager:
         )
         self.logger = logging.getLogger("BackendManager")
 
-    def connect_hardware(self, port: str, baudrate: int = 9600) -> bool:
+    def connect_hardware(self, port: str, baudrate: int = 115200) -> bool:
         """Connect to hardware with full initialization"""
         self.logger.info(f"Connecting to hardware on {port}")
 
@@ -680,7 +681,7 @@ class BackendManager:
 
         # Configure analog pins as inputs
         for pin in ['A0', 'A1', 'A2', 'A3', 'A4', 'A5']:
-            # Note: Analog pins are input by default on Arduino
+            # Note: Analog pins are input by default on STM32
             pass
 
         self.logger.info("Default pin configurations initialized")

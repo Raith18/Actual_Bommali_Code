@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns="http://www.st.com/stm32cubeide" version="1.0">
+  <Configuration name="STM32G474RE_Nucleo">
+    <Device>STM32G474RETX</Device>
+    <Board>NUCLEO-G474RE</Board>
+
+    <!-- Clock Configuration -->
+    <Clock>
+      <Source>HSE</Source>
+      <HSE_Value>8MHz</HSE_Value>
+      <PLL>
+        <M>6</M>
+        <N>85</N>
+        <P>2</P>
+        <Q>2</Q>
+        <R>2</R>
+      </PLL>
+      <SYSCLK>170MHz</SYSCLK>
+      <HCLK>170MHz</HCLK>
+      <PCLK1>170MHz</PCLK1>
+      <PCLK2>170MHz</PCLK2>
+    </Clock>
+
+    <!-- Peripheral Configuration -->
+    <Peripherals>
+      <!-- USB CDC -->
+      <USB_OTG_FS enabled="true">
+        <Mode>Device</Mode>
+        <Class>CDC</Class>
+        <VBUS_Sensing>enabled</VBUS_Sensing>
+      </USB_OTG_FS>
+
+      <!-- UART1 for Bus Servos -->
+      <USART1 enabled="true">
+        <BaudRate>1000000</BaudRate>
+        <WordLength>8</WordLength>
+        <StopBits>1</StopBits>
+        <Parity>None</Parity>
+        <Mode>TX_RX</Mode>
+        <HardwareFlowControl>None</HardwareFlowControl>
+        <Pins>
+          <TX>PA9</TX>
+          <RX>PA10</RX>
+        </Pins>
+      </USART1>
+
+      <!-- TIM2 for PWM Servos -->
+      <TIM2 enabled="true">
+        <Mode>PWM</Mode>
+        <Prescaler>169</Prescaler>
+        <Period>19999</Period>
+        <Channels>
+          <Channel1 enabled="true">
+            <Pin>PA0</Pin>
+            <Pulse>1500</Pulse>
+            <Polarity>High</Polarity>
+          </Channel1>
+          <Channel2 enabled="true">
+            <Pin>PA1</Pin>
+            <Pulse>1500</Pulse>
+            <Polarity>High</Polarity>
+          </Channel2>
+        </Channels>
+      </TIM2>
+
+      <!-- GPIO Configuration -->
+      <GPIO>
+        <PC7>
+          <Mode>Output</Mode>
+          <Pull>None</Pull>
+          <Speed>Low</Speed>
+        </PC7>
+      </GPIO>
+    </Peripherals>
+
+    <!-- Middleware -->
+    <Middleware>
+      <USB_DEVICE enabled="true">
+        <Class>CDC</Class>
+      </USB_DEVICE>
+    </Middleware>
+
+    <!-- Project Settings -->
+    <Project>
+      <Language>C</Language>
+      <Libraries>HAL</Libraries>
+      <HeapSize>0x200</HeapSize>
+      <StackSize>0x400</StackSize>
+    </Project>
+  </Configuration>
+</Project>
